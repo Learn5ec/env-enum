@@ -32,17 +32,15 @@ High-Performance Async Recon Engine for Pentesters & Bug Hunters
 * **Secure code review analysts**
 
 Given a list of domains/subdomains, the tool:
-✔ Generates **environment-based subdomain permutations**
-✔ Fuzzes **API & backend paths**
-✔ Detects **Swagger/OpenAPI/GraphQL endpoints**
-✔ Discovers **SPA-style (/\#/path) hidden URLs**
-✔ Crawls **JS files & extracts hidden endpoints**
-✔ Discovers **parameters (?token=, ?auth=, etc.)**
-✔ Uses **concurrent async HTTP requests** for maximum speed
 
-All output is automatically saved to:
-
-* **env-enum.txt**
+* Generates **environment-based subdomain permutations**
+* Fuzzes **API & backend paths**
+* Detects **Swagger/OpenAPI/GraphQL endpoints**
+* Discovers **SPA-style (/\#/path) hidden URLs**
+* Crawls **JS files & extracts hidden endpoints**
+* Discovers **parameters (?token=, ?auth=, etc.)**
+* Uses **concurrent async HTTP requests** for maximum speed
+* Automatically saves all output to **env-enum.txt**
 
 ---
 
@@ -118,37 +116,37 @@ pip3 install aiohttp
 **Basic run**
 
 ```bash
-python3 env_enum_tool.py input.txt
+python3 env-enum.py input.txt
 ```
 
 **Debug mode (full details)**
 
 ```bash
-python3 env_enum_tool.py input.txt --mode debug
+python3 env-enum.py input.txt --mode debug
 ```
 
 **Quiet mode (no console output)**
 
 ```bash
-python3 env_enum_tool.py input.txt --mode quiet
+python3 env-enum.py input.txt --mode quiet
 ```
 
 **Regex-only JS parsing (default)**
 
 ```bash
-python3 env_enum_tool.py input.txt --jsmode regex
+python3 env-enum.py input.txt --jsmode regex
 ```
 
 **Evaluate JS expressions**
 
 ```bash
-python3 env_enum_tool.py input.txt --jsmode exec
+python3 env-enum.py input.txt --jsmode exec
 ```
 
 **Boost performance**
 
 ```bash
-python3 env_enum_tool.py input.txt --concurrency 150
+python3 env-enum.py input.txt --concurrency 150
 ```
 
 -----
@@ -218,25 +216,25 @@ A backup file `env-enum.txt.bak` is created on each run.
 🔎 **Run all features with full logs**
 
 ```bash
-python3 env_enum_tool.py targets.txt --mode debug --jsmode exec --concurrency 100
+python3 env-enum.py targets.txt --mode debug --jsmode exec --concurrency 100
 ```
 
 🚀 **Fast scanning, minimal logs**
 
 ```bash
-python3 env_enum_tool.py targets.txt --mode discovery --concurrency 150
+python3 env-enum.py targets.txt --mode discovery --concurrency 150
 ```
 
 🧩 **JS crawling only (regex)**
 
 ```bash
-python3 env_enum_tool.py targets.txt --jsmode regex
+python3 env-enum.py targets.txt --jsmode regex
 ```
 
 💀 **Fully silent (useful for automation)**
 
 ```bash
-python3 env_enum_tool.py targets.txt --mode quiet
+python3 env-enum.py targets.txt --mode quiet
 ```
 
 -----
