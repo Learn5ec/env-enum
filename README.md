@@ -89,7 +89,7 @@ Supports:
 1.  **Clone the repository**
 
 ```bash
-git clone https://github.com/M1ck3y791/env-enum
+git clone https://github.com/Learn5ec/env-enum
 cd env-enum
 python3 -m venv here
 source here/bin/activate
