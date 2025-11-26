@@ -32,17 +32,17 @@ High-Performance Async Recon Engine for Pentesters & Bug Hunters
 * **Secure code review analysts**
 
 Given a list of domains/subdomains, the tool:
-* ✔ Generates **environment-based subdomain permutations**
-* ✔ Fuzzes **API & backend paths**
-* ✔ Detects **Swagger/OpenAPI/GraphQL endpoints**
-* ✔ Discovers **SPA-style (/\#/path) hidden URLs**
-* ✔ Crawls **JS files & extracts hidden endpoints**
-* ✔ Discovers **parameters (?token=, ?auth=, etc.)**
-* ✔ Uses **concurrent async HTTP requests** for maximum speed
+✔ Generates **environment-based subdomain permutations**
+✔ Fuzzes **API & backend paths**
+✔ Detects **Swagger/OpenAPI/GraphQL endpoints**
+✔ Discovers **SPA-style (/\#/path) hidden URLs**
+✔ Crawls **JS files & extracts hidden endpoints**
+✔ Discovers **parameters (?token=, ?auth=, etc.)**
+✔ Uses **concurrent async HTTP requests** for maximum speed
 
 All output is automatically saved to:
 
-> env-enum.txt
+* `env-enum.txt`
 
 ---
 
@@ -91,8 +91,10 @@ Supports:
 1.  **Clone the repository**
 
 ```bash
-git clone [https://github.com/M1ck3y791/env-enum-tool](https://github.com/M1ck3y791/env-enum-tool)
+git clone https://github.com/M1ck3y791/env-enum-tool
 cd env-enum-tool
+python3 -m venv here
+source here/bin/activate
 ````
 
 2.  **Install dependencies**
@@ -196,7 +198,7 @@ Protocol will be auto-normalized.
 
 All results are saved to:
 
-> env-enum.txt
+* `env-enum.txt`
 
 Examples:
 
