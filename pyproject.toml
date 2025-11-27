@@ -21,11 +21,7 @@ dependencies = [
     "py-mini-racer>=0.6.0",
 ]
 
-# Console entry point (important)
-[project.scripts]
-env-enum = "env_enum.main:main"
-
-# Optional classifiers for PyPI
+# CLASSIFIERS go here, NOT under scripts
 classifiers = [
     "Environment :: Console",
     "Intended Audience :: Information Technology",
@@ -33,3 +29,6 @@ classifiers = [
     "Topic :: Security",
     "License :: OSI Approved :: MIT License",
 ]
+
+[project.scripts]
+env-enum = "env_enum.main:main"
