@@ -154,4 +154,152 @@ class Scanner:
 
         return endpoints, params
 
-    # --------------
+    # -----------------------------
+    # JS regex matchers
+    # -----------------------------
+    def _extract_js_endpoints(self, body: bytes):
+        endpoints = set()
+
+        # absolute URLs
+        for m in ABS_URL_RE.findall(body):
+            try:
+                endpoints.add(m.decode())
+            except:
+                continue
+
+        # relative URLs
+        for m in REL_URL_RE.findall(body):
+            try:
+                endpoints.add(m.decode())
+            except:
+                continue
+
+        # JSON files
+        for m in JSON_RE.findall(body):
+            try:
+                endpoints.add(m.decode())
+            except:
+                continue
+
+        # API hints ("/api", "/v1", "/openapi", etc.)
+        for m in API_HINT_RE.findall(body):
+            try:
+                endpoints.add(m.decode())
+            except:
+                continue
+
+        # Sensitive patterns (token, apikey, etc.)
+        for m in SENSITIVE_RE.findall(body):
+            try:
+                endpoints.add("SENSITIVE:" + m.decode())
+            except:
+                continue
+
+        return endpoints
+
+    def _extract_js_params(self, body: bytes):
+        params = set()
+        for m in PARAM_RE.findall(body):
+            try:
+                params.add(m.decode())
+            except:
+                continue
+        return params
+
+    # ==================================================================
+    # JS EXEC (Dynamic string evaluation)
+    # ==================================================================
+
+    def _execute_js_and_extract(self, js_text: str):
+        """
+        Tries to evaluate simple expressions, string concatenations,
+        var/const assignments, etc.
+        """
+        extracted = set()
+
+        if not self.ctx:
+            return extracted
+
+        # var x = '...'
+        assignments = re.findall(
+            r"(?:var|let|const)\s+([A-Za-z0-9_$]+)\s*=\s*([\"'].*?[\"'])\s*;",
+            js_text,
+            re.S,
+        )
+
+        for name, val in assignments:
+            try:
+                v = self.ctx.eval(val)
+                if isinstance(v, str) and ("/" in v or "api" in v or "http" in v):
+                    extracted.add(v)
+            except Exception:
+                continue
+
+        # string concatenations
+        exprs = re.findall(
+            r"([\"']\/[^\n\"']+[\"'](?:\s*\+\s*[^\n;]+)+)",
+            js_text
+        )
+        for ex in exprs:
+            try:
+                v = self.ctx.eval(ex)
+                if isinstance(v, str):
+                    extracted.add(v)
+            except Exception:
+                continue
+
+        return extracted
+
+    # ==================================================================
+    # URL Normalization
+    # ==================================================================
+
+    def normalize_js_endpoint(self, base_url: str, endpoint: str):
+        """
+        Normalizes JS-discovered endpoints to absolute URLs.
+        """
+
+        if not endpoint:
+            return None
+
+        # Already full URL
+        if endpoint.startswith("http://") or endpoint.startswith("https://"):
+            return endpoint
+
+        # Sensitive tags
+        if endpoint.startswith("SENSITIVE:"):
+            return None
+
+        # Relative path
+        if endpoint.startswith("/"):
+            return urljoin(base_url, endpoint)
+
+        # Just a raw string fragment → ignore
+        if "." not in endpoint and "/" not in endpoint:
+            return None
+
+        return urljoin(base_url, "/" + endpoint.strip("/"))
+
+    # ==================================================================
+    # API Documentation Detection
+    # ==================================================================
+
+    def detect_api_docs(self, urls: set):
+        """
+        Returns URLs that look like OpenAPI/Swagger/GraphQL docs.
+        """
+
+        hits = set()
+        for u in urls:
+            low = u.lower()
+            if (
+                "/swagger" in low
+                or "swagger.json" in low
+                or "openapi" in low
+                or "openapi.json" in low
+                or "/graphql" in low
+                or "graphiql" in low
+                or "/docs" in low
+            ):
+                hits.add(u)
+        return hits
