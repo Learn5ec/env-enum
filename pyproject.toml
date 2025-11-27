@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "env-enum"
+version = "0.1.0"
+description = "Asynchronous environment & endpoint enumerator with JS crawling."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name = "Your Name", email = "you@example.com" }
+]
+
+keywords = ["security", "pentest", "recon", "enumeration", "async", "crawler"]
+
+dependencies = [
+    "aiohttp>=3.8.0",
+    "py-mini-racer>=0.6.0",
+]
+
+# Console entry point (important)
+[project.scripts]
+env-enum = "env_enum.main:main"
+
+# Optional classifiers for PyPI
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+    "License :: OSI Approved :: MIT License",
+]
