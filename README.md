@@ -12,9 +12,12 @@ High-Performance Async Recon Engine for Pentesters & Bug Hunters
 
 ## ⚠ Notice
 
-This is the **legacy/main branch**, which contains the original monolithic version of **env-enum**.  
-The actively maintained, modular version is now in the [modular branch](https://github.com/Learn5ec/env-enum/tree/modular).  
-While if you're looking for a stable single-shot (monolithic) version you can clone it using `git clone -b modular https://github.com/Learn5ec/env-enum.git`.
+This is the **legacy/main branch**, which contains the original monolithic version of **env-enum**. The actively maintained, modular version is now in the [modular branch](https://github.com/Learn5ec/env-enum/tree/modular).  
+While if you're looking for a stable single-shot (monolithic) version you can clone it using 
+
+```bash
+git clone -b main https://github.com/Learn5ec/env-enum.git
+````
 
 **Main branch users are encouraged to migrate to *`modular`* for improved performance, maintainability, and plugin support.**
 
